@@ -28,6 +28,7 @@ namespace QuickNote.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(x => x.AddDefaultPolicy(builder => builder.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin()));
             services.AddDbContext<ApplicationDbContext>(optionsbuilder => optionsbuilder.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -49,6 +50,8 @@ namespace QuickNote.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
